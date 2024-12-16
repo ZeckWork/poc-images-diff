@@ -22,3 +22,6 @@ jobs:
         uses: ZeckWork/compress-images@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+            ACTIONS_STEP_DEBUG: true
+            ACTIONS_RUNNER_DEBUG: true
