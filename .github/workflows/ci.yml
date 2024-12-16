@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compress Images
-        uses: ZeckWork/compress-images@128c2b57a22b19923cfbc719278570813fafe5d6
+        uses: ZeckWork/compress-images@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
         env:
