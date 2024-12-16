@@ -1,0 +1,24 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+    pull_request:
+        paths:
+            - '**.jpg'
+            - '**.jpeg'
+            - '**.png'
+            - '**.webp'
+
+jobs:
+  build:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    name: calibreapp/image-actions
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Compress Images
+        uses: ZeckWork/compress-images@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
