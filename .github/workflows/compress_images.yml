@@ -17,19 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Configure Git
+      # Configurar Git
       - name: Configure Git
         run: |
-          git config user.name "ZeckWork"
-          git config user.email "ezequiel.de.oliveira.lima@gmail.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "actions@github.com"
 
-      # Instalar dependências necessárias
-      - name: Install Image Compression Tool
+      # Instalar dependências necessárias (ImagemMagick para compressão)
+      - name: Install ImageMagick
         run: |
           sudo apt-get update
           sudo apt-get install -y imagemagick
 
-      # Comprimir imagens
+      # Encontrar e comprimir imagens
       - name: Compress Images
         id: compress
         run: |
@@ -60,20 +60,22 @@ jobs:
             git add .
             git commit -m "Compressed images in PR"
             echo "Changes committed."
+            echo "true" >> $HAS_CHANGES
           else
             echo "No images were compressed."
+            echo "false" >> $HAS_CHANGES
           fi
 
-      # Fazer commit das alterações
+      # Fazer commit das alterações (se houver)
       - name: Push Changes
-        if: steps.compress.outputs.has-changes
+        if: env.HAS_CHANGES == 'true'
         run: git push
 
-      # Comentar no PR com os detalhes da compressão
+      # Comentar no PR com as imagens alteradas e a redução de tamanho
       - name: Comment on PR
+        if: env.HAS_CHANGES == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: steps.compress.outputs.has-changes
         run: |
           pr_number=$(echo "${{ github.event.pull_request.number }}")
           comment="### Image Compression Summary\n\n"
