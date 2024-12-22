@@ -2,9 +2,11 @@ name: Compress Images in Pull Requests
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
+        paths:
+            - '**.jpg'
+            - '**.jpeg'
+            - '**.png'
+            - '**.webp'
 
 jobs:
   compress-images:
