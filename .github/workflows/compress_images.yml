@@ -1,0 +1,66 @@
+name: Compress Images in Pull Requests
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  compress-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configure Git
+      - name: Configure Git
+        run: |
+          git config user.name "ZeckWork"
+          git config user.email "ezequiel.de.oliveira.lima@gmail.com"
+
+      # Instalar dependências necessárias
+      - name: Install Image Compression Tool
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+
+      # Comprimir imagens
+      - name: Compress Images
+        id: compress
+        run: |
+          # Diretório de trabalho para rastrear imagens alteradas
+          mkdir -p image-diffs
+
+          # Percorrer todas as imagens alteradas no PR
+          for file in $(git diff --name-only --diff-filter=d | grep -E '\.(png|jpg|jpeg|gif|webp)$'); do
+            original_size=$(stat -c%s "$file")
+            mogrify -strip -interlace Plane -gaussian-blur 0.05 -quality 85 "$file"
+            compressed_size=$(stat -c%s "$file")
+            reduction=$((100 - (compressed_size * 100 / original_size)))
+            echo "$file: $original_size -> $compressed_size (${reduction}%)" >> image-diffs/summary.txt
+          done
+
+          # Preparar commit se houver alterações
+          if [ -s image-diffs/summary.txt ]; then
+            git add .
+            git commit -m "Compressed images in PR"
+          fi
+
+      # Fazer commit das alterações
+      - name: Push Changes
+        if: steps.compress.outputs.has-changes
+        run: git push
+
+      # Comentar no PR com os detalhes da compressão
+      - name: Comment on PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.compress.outputs.has-changes
+        run: |
+          pr_number=$(echo "${{ github.event.pull_request.number }}")
+          comment="### Image Compression Summary\n\n"
+          comment+="$(cat image-diffs/summary.txt | sed 's/^/- /')"
+          gh pr comment "$pr_number" --body "$comment"
