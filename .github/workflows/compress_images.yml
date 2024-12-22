@@ -33,11 +33,21 @@ jobs:
       - name: Compress Images
         id: compress
         run: |
-          # Diretório de trabalho para rastrear imagens alteradas
+          # Diretório de saída para guardar um resumo
           mkdir -p image-diffs
 
           # Percorrer todas as imagens alteradas no PR
-          for file in $(git diff --name-only --diff-filter=d | grep -E '\.(png|jpg|jpeg|gif|webp)$'); do
+          changed_files=$(git diff --name-only --diff-filter=d | grep -E '\.(png|jpg|jpeg|gif|webp)$')
+          
+          if [ -z "$changed_files" ]; then
+            echo "No image files found, skipping compression."
+            exit 0
+          fi
+
+          echo "Changed image files: $changed_files"
+
+          # Comprimir cada imagem alterada
+          for file in $changed_files; do
             original_size=$(stat -c%s "$file")
             mogrify -strip -interlace Plane -gaussian-blur 0.05 -quality 85 "$file"
             compressed_size=$(stat -c%s "$file")
@@ -49,6 +59,9 @@ jobs:
           if [ -s image-diffs/summary.txt ]; then
             git add .
             git commit -m "Compressed images in PR"
+            echo "Changes committed."
+          else
+            echo "No images were compressed."
           fi
 
       # Fazer commit das alterações
