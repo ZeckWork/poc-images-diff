@@ -60,20 +60,20 @@ jobs:
             git add .
             git commit -m "Compressed images in PR"
             echo "Changes committed."
-            echo "true" >> $HAS_CHANGES
+            echo "true" >> $GITHUB_ENV
           else
             echo "No images were compressed."
-            echo "false" >> $HAS_CHANGES
+            echo "false" >> $GITHUB_ENV
           fi
 
       # Fazer commit das alterações (se houver)
       - name: Push Changes
-        if: env.HAS_CHANGES == 'true'
+        if: env.GITHUB_ENV == 'true'
         run: git push
 
       # Comentar no PR com as imagens alteradas e a redução de tamanho
       - name: Comment on PR
-        if: env.HAS_CHANGES == 'true'
+        if: env.GITHUB_ENV == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
