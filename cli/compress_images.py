@@ -67,6 +67,9 @@ def comment_on_pr(pr_number, comment, token, repo_owner, repo_name):
 
 # Função para realizar commit e push no Git
 def commit_and_push_changes(commit_message="Comprimir imagens e otimizar tamanhos"):
+    # Garantir que estamos em uma branch válida
+    subprocess.run(["git", "checkout", "-b", "compress-images-branch"], check=True)
+    
     # Adiciona as mudanças no git
     subprocess.run(["git", "add", "."], check=True)
     
@@ -74,7 +77,7 @@ def commit_and_push_changes(commit_message="Comprimir imagens e otimizar tamanho
     subprocess.run(["git", "commit", "-m", commit_message], check=True)
     
     # Envia as mudanças para o repositório remoto
-    subprocess.run(["git", "push"], check=True)
+    subprocess.run(["git", "push", "-u", "origin", "compress-images-branch"], check=True)
 
 # Função principal
 def main():
