@@ -41,6 +41,7 @@ jobs:
           
           if [ -z "$changed_files" ]; then
             echo "No image files found, skipping compression."
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
             exit 0
           fi
 
@@ -60,10 +61,10 @@ jobs:
             git add .
             git commit -m "Compressed images in PR"
             echo "Changes committed."
-            echo "true" >> $GITHUB_ENV
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
           else
             echo "No images were compressed."
-            echo "false" >> $GITHUB_ENV
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
           fi
 
       # Fazer commit das alterações (se houver)
