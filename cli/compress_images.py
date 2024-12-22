@@ -65,10 +65,10 @@ def comment_on_pr(pr_number, comment, token, repo_owner, repo_name):
     else:
         print(f"Failed to post comment: {response.status_code}, {response.text}")
 
-# Função para realizar commit e push no Git
-def commit_and_push_changes(commit_message="Comprimir imagens e otimizar tamanhos"):
+# Função para garantir que estamos em uma branch válida
+def commit_and_push_changes(branch_name="compress-images-branch", commit_message="Comprimir imagens e otimizar tamanhos"):
     # Garantir que estamos em uma branch válida
-    subprocess.run(["git", "checkout", "-b", "compress-images-branch"], check=True)
+    subprocess.run(["git", "checkout", "-b", branch_name], check=True)
     
     # Adiciona as mudanças no git
     subprocess.run(["git", "add", "."], check=True)
@@ -77,7 +77,7 @@ def commit_and_push_changes(commit_message="Comprimir imagens e otimizar tamanho
     subprocess.run(["git", "commit", "-m", commit_message], check=True)
     
     # Envia as mudanças para o repositório remoto
-    subprocess.run(["git", "push", "-u", "origin", "compress-images-branch"], check=True)
+    subprocess.run(["git", "push", "-u", "origin", branch_name], check=True)
 
 # Função principal
 def main():
@@ -90,6 +90,7 @@ def main():
     parser.add_argument('--repo_owner', type=str, required=True, help='GitHub repository owner')
     parser.add_argument('--repo_name', type=str, required=True, help='GitHub repository name')
     parser.add_argument('--pr_number', type=int, required=True, help='Pull Request number')
+    parser.add_argument('--branch_name', type=str, default="compress-images-branch", help='Branch name for committing changes')
     
     args = parser.parse_args()
 
@@ -111,11 +112,11 @@ def main():
         
         print(f"Report saved to 'compression_report.txt'")
         
-        # Commit e Push das mudanças
-        commit_and_push_changes()
-
         # Comentar no PR
         comment_on_pr(args.pr_number, report, args.token, args.repo_owner, args.repo_name)
+
+        # Commit and push changes to the specified branch
+        commit_and_push_changes(args.branch_name)
     else:
         print("No image files found to compress.")
     
