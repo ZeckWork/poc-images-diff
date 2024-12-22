@@ -19,6 +19,11 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Set up Git
+      run: |
+        git config --global user.email "ezequiel.de.oliveira.lima@gmail.com"
+        git config --global user.name "ZeckWork"
+
     - name: Install dependencies
       run: |
         cd ./cli
