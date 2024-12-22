@@ -1,84 +1,30 @@
-name: Compress Images in Pull Requests
+name: Compress and Comment on PR
 
 on:
   pull_request:
-        paths:
-            - '**.jpg'
-            - '**.jpeg'
-            - '**.png'
-            - '**.webp'
+    paths:
+      - '**/*.jpg'
+      - '**/*.png'
 
 jobs:
-  compress-images:
+  compress_and_comment:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Configurar Git
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "actions@github.com"
+    - name: Set up Python
+      uses: actions/setup-python@v5.3.0
+      with:
+        python-version: '3.x'
 
-      # Instalar dependências necessárias (ImagemMagick para compressão)
-      - name: Install ImageMagick
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y imagemagick
+    - name: Install dependencies
+      run: |
+        cd ./cli
+        python -m pip install --upgrade pip
+        pip install requests pillow
 
-      # Encontrar e comprimir imagens
-      - name: Compress Images
-        id: compress
-        run: |
-          # Diretório de saída para guardar um resumo
-          mkdir -p image-diffs
-
-          # Percorrer todas as imagens alteradas no PR
-          changed_files=$(git diff --name-only --diff-filter=d | grep -E '\.(png|jpg|jpeg|gif|webp)$')
-          
-          if [ -z "$changed_files" ]; then
-            echo "No image files found, skipping compression."
-            echo "HAS_CHANGES=false" >> $GITHUB_ENV
-            exit 0
-          fi
-
-          echo "Changed image files: $changed_files"
-
-          # Comprimir cada imagem alterada
-          for file in $changed_files; do
-            original_size=$(stat -c%s "$file")
-            mogrify -strip -interlace Plane -gaussian-blur 0.05 -quality 85 "$file"
-            compressed_size=$(stat -c%s "$file")
-            reduction=$((100 - (compressed_size * 100 / original_size)))
-            echo "$file: $original_size -> $compressed_size (${reduction}%)" >> image-diffs/summary.txt
-          done
-
-          # Preparar commit se houver alterações
-          if [ -s image-diffs/summary.txt ]; then
-            git add .
-            git commit -m "Compressed images in PR"
-            echo "Changes committed."
-            echo "HAS_CHANGES=true" >> $GITHUB_ENV
-          else
-            echo "No images were compressed."
-            echo "HAS_CHANGES=false" >> $GITHUB_ENV
-          fi
-
-      # Fazer commit das alterações (se houver)
-      - name: Push Changes
-        if: env.GITHUB_ENV == 'true'
-        run: git push
-
-      # Comentar no PR com as imagens alteradas e a redução de tamanho
-      - name: Comment on PR
-        if: env.GITHUB_ENV == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          pr_number=$(echo "${{ github.event.pull_request.number }}")
-          comment="### Image Compression Summary\n\n"
-          comment+="$(cat image-diffs/summary.txt | sed 's/^/- /')"
-          gh pr comment "$pr_number" --body "$comment"
+    - name: Run the compression and PR comment script
+      run: |
+        python3 compress_images.py --directory ./images --quality 80 --token ${{secrets.GITHUB_TOKEN}} --repo_owner ${{github.repository_owner}} --repo_name ${{github.event.repository.name}} --pr_number ${{github.event.pull_request.number}}
