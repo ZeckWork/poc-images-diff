@@ -11,26 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout PR code
       uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Set up Python
-      uses: actions/setup-python@v5.3.0
+      uses: actions/setup-python@v4
       with:
         python-version: '3.x'
 
-    - name: Set up Git
-      run: |
-        git config --global user.email "ezequiel.de.oliveira.lima@gmail.com"
-        git config --global user.name "ZeckWork"
-
     - name: Install dependencies
       run: |
-        cd ./cli
         python -m pip install --upgrade pip
         pip install requests pillow
 
     - name: Run the compression and PR comment script
       run: |
-        cd ./cli
+        python3 compress_images.py \
+          --directory ./images \
+          --quality 80 \
+          --token ${{secrets.GITHUB_TOKEN}} \
+          --repo_owner ${{github.repository_owner}} \
+          --repo_name ${{github.event.repository.name}} \
+          --pr_number ${{github.event.pull_request.number}} \
+          --branch_name ${{github.event.pull_request.head.ref}}
+
         python3 compress_images.py --directory ./images --quality 80 --token ${{secrets.GITHUB_TOKEN}} --repo_owner ${{github.repository_owner}} --repo_name ${{github.event.repository.name}} --pr_number ${{github.event.pull_request.number}} --branch_name ${{github.event.pull_request.head.ref}}
