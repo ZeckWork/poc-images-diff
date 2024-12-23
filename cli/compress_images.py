@@ -67,8 +67,18 @@ def comment_on_pr(pr_number, comment, token, repo_owner, repo_name):
 
 # Função para garantir que estamos em uma branch válida
 def commit_and_push_changes(branch_name="compress-images-branch", commit_message="Comprimir imagens e otimizar tamanhos"):
+    def switch_to_branch(branch_name):
+        # Verificar se a branch já existe
+        try:
+            subprocess.run(['git', 'rev-parse', '--verify', branch_name], check=True, stdout=subprocess.DEVNULL)
+            print(f"Branch '{branch_name}' já existe. Mudando para ela...")
+            subprocess.run(['git', 'checkout', branch_name], check=True)
+        except subprocess.CalledProcessError:
+            print(f"Branch '{branch_name}' não existe. Criando e mudando para ela...")
+            subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
+
     # Garantir que estamos em uma branch válida
-    subprocess.run(["git", "checkout", "-b", branch_name], check=True)
+    switch_to_branch(branch_name)
     
     # Adiciona as mudanças no git
     subprocess.run(["git", "add", "."], check=True)
