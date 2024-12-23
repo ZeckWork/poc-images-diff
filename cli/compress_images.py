@@ -25,6 +25,7 @@ def compress_images_in_directory(directory, quality=85, file_types=None):
     
     compressed_files = []
     for root, _, files in os.walk(directory):
+        print(f"Current directory: {root}")
         for file in files:
             if any(file.lower().endswith(ext) for ext in file_types):
                 image_path = os.path.join(root, file)
