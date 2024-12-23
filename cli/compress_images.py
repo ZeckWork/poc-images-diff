@@ -75,6 +75,7 @@ def commit_and_push_changes(branch_name="compress-images-branch", commit_message
             subprocess.run(['git', 'checkout', branch_name], check=True)
         except subprocess.CalledProcessError:
             print(f"Branch '{branch_name}' não existe. Criando e mudando para ela...")
+            subprocess.run(['git', 'fetch', '--all'], check=True)
             subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
 
     # Garantir que estamos em uma branch válida
