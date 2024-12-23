@@ -31,7 +31,7 @@ jobs:
       run: |
         cd ./cli
         python3 compress_images.py \
-          --directory ./images \
+          --directory ../ \
           --quality 80 \
           --token ${{secrets.GITHUB_TOKEN}} \
           --repo_owner ${{github.repository_owner}} \
