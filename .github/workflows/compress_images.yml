@@ -23,11 +23,13 @@ jobs:
 
     - name: Install dependencies
       run: |
+        cd ./cli
         python -m pip install --upgrade pip
         pip install requests pillow
 
     - name: Run the compression and PR comment script
       run: |
+        cd ./cli
         python3 compress_images.py \
           --directory ./images \
           --quality 80 \
