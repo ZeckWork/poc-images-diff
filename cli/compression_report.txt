@@ -1,94 +1,109 @@
-File: ../www.thispersondoesnotexist.com.jpeg
-Original size: 145586 bytes
-Compressed size: 145590 bytes
-Reduction: -0.00%
-
-File: ../8.png
-Original size: 2625457 bytes
+File: ../23.png
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../9.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../14.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../15.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../17.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../16.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
 
 File: ../12.png
-Original size: 2625457 bytes
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../13.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../11.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../10.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
 
 File: ../18.png
-Original size: 2625457 bytes
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
 
-File: ../19.png
-Original size: 2625457 bytes
+File: ../8.png
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
 
-File: ../5.png
-Original size: 2625457 bytes
+File: ../11.png
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../7.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
-
-File: ../6.png
-Original size: 2625457 bytes
-Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
 
 File: ../2.png
-Original size: 2625457 bytes
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
+
+File: ../10.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../22.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../17.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
 
 File: ../3.png
-Original size: 2625457 bytes
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
+
+File: ../20.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
 
 File: ../1.png
-Original size: 2625457 bytes
+Original size: 2615535 bytes
 Compressed size: 2625457 bytes
-Reduction: 0.00%
+Reduction: -0.38%
+
+File: ../16.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../21.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../14.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../15.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../9.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../5.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../6.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../7.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../19.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../13.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
