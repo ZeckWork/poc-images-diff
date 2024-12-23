@@ -25,6 +25,7 @@ def compress_images_in_directory(directory, quality=85, file_types=None):
     
     compressed_files = []
     for root, _, files in os.walk(directory):
+        print(f"Current directory: {root}")
         for file in files:
             if any(file.lower().endswith(ext) for ext in file_types):
                 image_path = os.path.join(root, file)
@@ -65,29 +66,40 @@ def comment_on_pr(pr_number, comment, token, repo_owner, repo_name):
     else:
         print(f"Failed to post comment: {response.status_code}, {response.text}")
 
-# Função para garantir que estamos em uma branch válida
-def commit_and_push_changes(branch_name="compress-images-branch", commit_message="Comprimir imagens e otimizar tamanhos"):
-    def switch_to_branch(branch_name):
-        # Verificar se a branch já existe
+def switch_to_branch(branch_name):
+    # Verifica se a branch já existe localmente
+    try:
+        subprocess.run(['git', 'rev-parse', '--verify', branch_name], check=True, stdout=subprocess.DEVNULL)
+        print(f"Branch '{branch_name}' já existe localmente. Mudando para ela...")
+        subprocess.run(['git', 'checkout', branch_name], check=True)
+    except subprocess.CalledProcessError:
+        # Branch não existe localmente, verifica se existe remotamente
+        print(f"Branch '{branch_name}' não existe localmente. Verificando remotamente...")
+        remote_branch = f"origin/{branch_name}"
         try:
-            subprocess.run(['git', 'rev-parse', '--verify', branch_name], check=True, stdout=subprocess.DEVNULL)
-            print(f"Branch '{branch_name}' já existe. Mudando para ela...")
-            subprocess.run(['git', 'checkout', branch_name], check=True)
+            subprocess.run(['git', 'fetch', 'origin', branch_name], check=True, stdout=subprocess.DEVNULL)
+            subprocess.run(['git', 'checkout', '-b', branch_name, '--track', remote_branch], check=True)
+            print(f"Branch '{branch_name}' foi criada localmente a partir da remota.")
         except subprocess.CalledProcessError:
-            print(f"Branch '{branch_name}' não existe. Criando e mudando para ela...")
+            # Cria uma nova branch se não existir nem remotamente
+            print(f"Branch '{branch_name}' não existe remotamente. Criando nova...")
             subprocess.run(['git', 'checkout', '-b', branch_name], check=True)
 
-    # Garantir que estamos em uma branch válida
-    switch_to_branch(branch_name)
-    
-    # Adiciona as mudanças no git
-    subprocess.run(["git", "add", "."], check=True)
-    
-    # Faz o commit com a mensagem
-    subprocess.run(["git", "commit", "-m", commit_message], check=True)
-    
-    # Envia as mudanças para o repositório remoto
-    subprocess.run(["git", "push", "-u", "origin", branch_name], check=True)
+def commit_and_push_changes(branch_name):
+    switch_to_branch(branch_name=branch_name)
+    # Configurações do git
+    os.system("git config user.name 'github-actions[bot]'")
+    os.system("git config user.email 'github-actions[bot]@users.noreply.github.com'")
+
+    # Atualiza a branch antes de comitar
+    subprocess.run(['git', 'pull', '--rebase', 'origin', branch_name], check=True)
+
+    # Adiciona as mudanças e realiza o commit
+    os.system("git add .")
+    os.system("git commit -m 'Compressed images' || echo 'No changes to commit'")
+
+    # Envia as mudanças para a branch
+    subprocess.run(['git', 'push', '--force', 'origin', branch_name], check=True)
 
 # Função principal
 def main():
