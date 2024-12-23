@@ -1,44 +1,4 @@
-File: ../23.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../12.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../18.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../8.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../11.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
 File: ../2.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../10.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../22.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../17.png
 Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
@@ -48,37 +8,7 @@ Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
 
-File: ../20.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
 File: ../1.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../16.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../21.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../14.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../15.png
-Original size: 2615535 bytes
-Compressed size: 2625457 bytes
-Reduction: -0.38%
-
-File: ../9.png
 Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
@@ -93,17 +23,27 @@ Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
 
-File: ../7.png
+File: ../images/2.png
 Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
 
-File: ../19.png
+File: ../images/3.png
 Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
 
-File: ../13.png
+File: ../images/1.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../images/5.png
+Original size: 2615535 bytes
+Compressed size: 2625457 bytes
+Reduction: -0.38%
+
+File: ../images/6.png
 Original size: 2615535 bytes
 Compressed size: 2625457 bytes
 Reduction: -0.38%
