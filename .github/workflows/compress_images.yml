@@ -10,6 +10,10 @@ jobs:
   compress_and_comment:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      pull-requests: write
+
     steps:
     - name: Checkout PR code
       uses: actions/checkout@v3
